@@ -8,7 +8,8 @@ from datetime import datetime
 subprocess.call('cls', shell=True)
 
 # Ask for input
-remoteServer = input("Enter a remote host to scan: ")
+remoteServer = input("macbook-pro")
+# remoteServer = input("192.168.1.85") right now neither are working
 remoteServerIP = socket.gethostbyname(remoteServer)
 
 # Print a nice banner with information on which host we are about to scan
@@ -21,12 +22,12 @@ t1 = datetime.now()
 
 # Using the range function to specify ports
 
-    for port in range(21,81):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        result = sock.connect_ex((remoteServerIP, port))
-        if result == 0:
-            print ("Port {}: 	 Open".format(port))
-        sock.close()
+for port in range(21,81):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((remoteServerIP, port))
+    if result == 0:
+        print ("Port {}: 	 Open".format(port))
+    sock.close()
 
 # Checking the time again
 t2 = datetime.now()
