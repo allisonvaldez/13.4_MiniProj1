@@ -20,19 +20,30 @@ print("-" * 60)
 # Check what time the scan started
 t1 = datetime.now()
 
+try:
 
 
-# Using the range function to specify ports
+    # Using the range function to specify ports and changing the port numbers to scan
+    for port in range(1, 1024):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #setting up the timeout to be half a second
+        sock.settimeout(0.5)
+        result = sock.connect_ex((remoteServerIP, port))
+        if result == 0:
+            print ("Port {}: 	 Open".format(port))
+        sock.close()
 
-#changing the port numbers to scan
-for port in range(1, 1024):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #setting up the timeout to be half a second
-    sock.settimeout(0.5)
-    result = sock.connect_ex((remoteServerIP, port))
-    if result == 0:
-        print ("Port {}: 	 Open".format(port))
-    sock.close()
+except KeyboardInterrupt:
+    print("You pressed  Ctrl+C")
+    sys.exit()
+
+except socket.gaierror:
+    print("Hostname could not be resolved")
+    sys.exit()
+
+except socket.error:
+    print("Could not connect to remote server")
+    sys.exit()
 
 # Checking the time again
 t2 = datetime.now()
